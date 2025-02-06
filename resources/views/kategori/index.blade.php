@@ -5,25 +5,27 @@
     <div class="container-fluid pt-4 px-4">
         <div class="row">
             <div class="col-lg-12 mt-5">
-                <div class="panel panel-default">
-                    <h4 class="text-center text-secondary panel-heading">
-                        Tabel Data kategori
+                <div class="card shadow">
+                    <h4 class="text-center text-secondary card-header">
+                        Tabel Data Kategori
                     </h4>
-                    <!-- /.panel-heading -->
-                    <div class="panel-body">
-                        <div class="table-responsive">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
                             <!-- Tombol untuk menampilkan modal -->
-                            <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
-                                Tambah
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                                <i class="bi bi-plus-circle"></i> Tambah Kategori
                             </button>
 
                             @if (session('success'))
-                                <div class="alert alert-success" role="alert">
-                                    {{ session('success') }}
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>Berhasil!</strong> {{ session('success') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                             @endif
+                        </div>
 
-                            <table class="table table-bordered" id="dataTables-example">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -38,13 +40,17 @@
                                     @foreach ($kategori as $data)
                                         <tr>
                                             <td>{{ $no++ }}</td>
-                                            <td>{{ $data->kategori}}</td>
+                                            <td>{{ $data->kategori }}</td>
                                             <form action="{{ route('kategori.destroy', $data->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <td class="center">
-                                                    <a href="{{ route('kategori.edit', $data->id) }}" class="btn btn-success mx-1">Ubah</a>
-                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Yakin Ingin Menghapus??')">Hapus</button>
+                                                <td class="text-center">
+                                                    <a href="{{ route('kategori.edit', $data->id) }}" class="btn btn-success mx-1">
+                                                        <i class="bi bi-pencil-square"></i> Ubah
+                                                    </a>
+                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Yakin Ingin Menghapus??')">
+                                                        <i class="bi bi-trash"></i> Hapus
+                                                    </button>
                                                 </td>
                                             </form>
                                         </tr>
@@ -52,13 +58,9 @@
                                 </tbody>
                             </table>
                         </div>
-                        <!-- /.table-responsive -->
                     </div>
-                    <!-- /.panel-body -->
                 </div>
-                <!-- /.panel -->
             </div>
-            <!-- /.col-lg-12 -->
         </div>
     </div>
 </div>

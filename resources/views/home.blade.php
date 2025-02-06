@@ -1,4 +1,4 @@
-@extends('layouts.backend')
+@extends('layouts.admin')
 
 @section('content')
 
@@ -11,8 +11,9 @@
     </div>
 
     <div class="row">
+        <!-- Total Barang Card -->
         <div class="col-md-6 col-xl-3">
-            <div class="card">
+            <div class="card" style="background-color: rgba(0, 123, 255, 0.708); color: white;">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-8">
@@ -22,19 +23,22 @@
                                 <span class="text-success me-2"><i class="mdi mdi-arrow-top-right text-success"></i>+ 12%</span>Last month
                             </p>
                         </div>
-
                         <div class="col-4">
                             <div class="d-flex justify-content-center">
-                                <div id="total_space" class="me-2"></div>
+                                <i class="mdi mdi-cube-outline fs-2"></i>
                             </div>
                         </div>
+                    </div>
+                    <div class="mt-3 text-center">
+                        <a href="{{ route('barang.index') }}" class="btn btn-light btn-sm">View Details</a>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Total Kategori Card -->
         <div class="col-md-6 col-xl-3">
-            <div class="card">
+            <div class="card" style="background-color: rgba(24, 171, 59, 0.718); color: white;">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-8">
@@ -44,19 +48,22 @@
                                 <span class="text-danger me-2"><i class="mdi mdi-arrow-bottom-left text-danger"></i>- 25%</span>Last month
                             </p>
                         </div>
-
                         <div class="col-4">
                             <div class="d-flex justify-content-center">
-                                <div id="video_space" class="me-2"></div>
+                                <i class="mdi mdi-tag-multiple fs-2"></i>
                             </div>
                         </div>
+                    </div>
+                    <div class="mt-3 text-center">
+                        <a href="{{ route('kategori.index') }}" class="btn btn-light btn-sm">View Details</a>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Total Ruangan Card -->
         <div class="col-md-6 col-xl-3">
-            <div class="card">
+            <div class="card" style="background-color: rgba(255, 193, 7, 0.66); color: white;">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-8">
@@ -66,190 +73,91 @@
                                 <span class="text-success me-2"><i class="mdi mdi-arrow-top-right text-success"></i> + 45%</span>last month
                             </p>
                         </div>
-
                         <div class="col-4">
                             <div class="d-flex justify-content-center">
-                                <div id="music_space" class="me-2"></div>
+                                <i class="mdi mdi-home-modern fs-2"></i>
                             </div>
                         </div>
+                    </div>
+                    <div class="mt-3 text-center">
+                        <a href="{{ route('ruangan.index') }}" class="btn btn-light btn-sm">View Details</a>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Total Peminjam Card -->
         <div class="col-md-6 col-xl-3">
-            <div class="card">
+            <div class="card" style="background-color: rgba(231, 127, 9, 0.795); color: white;">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-8">
-                            <p class="text-muted mb-3 fw-semibold">Total Supplier</p>
-                            <h4 class="m-0 mb-3 fs-18">{{ \App\Models\Supplier::count() }}</h4>
+                            <p class="text-muted mb-3 fw-semibold">Total Peminjam</p>
+                            <h4 class="m-0 mb-3 fs-18">{{ \App\Models\Pinjaman::count() }}</h4>
                             <p class="mb-0 text-muted">
                                 <span class="text-success me-2"><i class="mdi mdi-arrow-top-right text-success"></i> + 25%</span>last month
                             </p>
                         </div>
-
                         <div class="col-4">
                             <div class="d-flex justify-content-center">
-                                <div id="document_space" class="me-2"></div>
+                                <i class="mdi mdi-account-multiple fs-2"></i>
                             </div>
                         </div>
+                    </div>
+                    <div class="mt-3 text-center">
+                        <a href="{{ route('pinjaman.index') }}" class="btn btn-light btn-sm">View Details</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12 col-xl-12">
+    <!-- Chart Container -->
+    <div class="row mt-4">
+        <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <h5 class="card-title mb-0">Data Barang</h5>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <div class="table-responsive">
-                                        @if (session('success'))
-                                            <div class="alert alert-success" role="alert">
-                                                {{ session('success') }}
-                                            </div>
-                                        @endif
-
-                                        <table class="table table-bordered" id="dataTables-example">
-                                            <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Nama Barang</th>
-                                                    <th>Kategori</th>
-                                                    <th>Kondisi</th>
-                                                    <th>Ruangan</th>
-                                                    <th>Alamat</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @php
-                                                    $no = 1;
-                                                @endphp
-                                                @foreach ($barang as $data)
-                                                    <tr>
-                                                        <td>{{ $no++ }}</td>
-                                                        <td>{{ $data->nama_barang }}</td>
-                                                        <td><center>{{ $data->kategori->kategori }}</center></td>
-                                                        <td>{{ $data->kondisi }}</td>
-                                                        <td><center>{{ $data->ruangan->nama_ruangan }}</center></td>
-                                                        <td>{{ $data->alamat }}</td>
-
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <h5 class="card-title">Dashboard Chart</h5>
                 </div>
-
                 <div class="card-body">
-                    <div class="justify-content-center">
-                        <div id="customer_rate" class="apex-charts"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="row">
-            <div class="col-md-12 col-xl-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <h5 class="card-title mb-0">Data Peminjaman</h5>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12 mt-5">
-                                <div class="panel panel-default">
-                                    <!-- /.panel-heading -->
-                                    <div class="panel-body">
-                                        <div class="table-responsive">
-                                            <!-- Tombol untuk menampilkan modal -->
-
-                                            @if (session('success'))
-                                                <div class="alert alert-success" role="alert">
-                                                    {{ session('success') }}
-                                                </div>
-                                            @endif
-
-                                            <table class="table table-bordered" id="dataTables-example">
-                                                <thead>
-                                                    <tr>
-                                                        <th>ID</th>
-                                                        <th>Nama Barang</th>
-                                                        <th>Tanggal Pinjam</th>
-                                                        <th>Tanggal Kembali</th>
-                                                        <th>Nama Peminjam</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @php
-                                                        $no=1;
-                                                    @endphp
-                                                    @foreach ($pinjaman as $data)
-                                                        <tr>
-                                                            <td>{{ $no++ }}</td>
-                                                            <td><center>{{ $data->barang->nama_barang}}</center></td>
-                                                            <td>{{ $data->tanggal_pinjam}}</td>
-                                                            <td>{{ $data->tanggal_kembali}}</td>
-                                                            <td>{{ $data->peminjam}}</td>
-                                                            <form action="{{ route('pinjaman.destroy', $data->id) }}" method="POST">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                            </form>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <!-- /.table-responsive -->
-                                    </div>
-                                    <!-- /.panel-body -->
-                                </div>
-                                <!-- /.panel -->
-                            </div>
-                            <!-- /.col-lg-12 -->
-                        </div>
-                    </div>
-                </div>
-
-                    <div class="card-body">
-                        <div class="justify-content-center">
-                            <div id="customer_rate" class="apex-charts"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        <div class="col-md-12 col-xl-6">
-            <div class="card">
-
-                <div class="card-header">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <h5 class="card-title mb-0">Author Sales</h5>
-                    </div>
-                </div>
-
-                <div class="card-body">
-                    <div class="justify-content-center">
-                        <div id="author_chart" class="apex-charts"></div>
-                    </div>
+                    <div id="chart"></div>
                 </div>
             </div>
         </div>
     </div>
 
 </div>
-@endsection
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize the ApexCharts diagram
+        var options = {
+            chart: {
+                type: 'bar',
+                height: 350
+            },
+            series: [{
+                name: 'Total',
+                data: [
+                    {{ \App\Models\Barang::count() }},
+                    {{ \App\Models\Kategori::count() }},
+                    {{ \App\Models\Ruangan::count() }},
+                    {{ \App\Models\Pinjaman::count() }}
+                ]
+            }],
+            xaxis: {
+                categories: ['Barang', 'Kategori', 'Ruangan', 'Peminjam']
+            },
+            colors: ['#007bff', '#28a745', '#ffc107', '#17a2b8'],
+            title: {
+                text: 'Total Count of Items',
+                align: 'center'
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+    });
+</script>
+
+@endsection

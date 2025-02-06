@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\pinjaman;
 use App\Models\pengembalian;
+use App\Models\barang;
 use Illuminate\Http\Request;
 
 class PengembalianController extends Controller
@@ -25,10 +26,12 @@ class PengembalianController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        $pinjaman = pinjaman::all();
-        return view('pengembalian.create', compact('pinjaman'));
-    }
+{
+    $pinjaman = pinjaman::all();
+    $barang = barang::all();
+    return view('pengembalian.create', compact('pinjaman', 'barang'));
+}
+
 
     /**
      * Store a newly created resource in storage.
@@ -40,6 +43,7 @@ class PengembalianController extends Controller
     {
         $validated = $request->validate([
             'id_peminjaman' => 'required',
+            'id_barang' => 'required|array',
             'kondisi_barang' => 'required|in:baik,rusak,rusak ringan',
             'tanggal_kembali' => 'required',
             'kerusakan' => 'required',
@@ -48,6 +52,7 @@ class PengembalianController extends Controller
 
        $pengembalian = new    pengembalian();
        $pengembalian->id_peminjaman = $request-> id_peminjaman;
+       $pengembalian->id_barang = $request-> id_barang;
        $pengembalian->kondisi_barang = $request-> kondisi_barang;
        $pengembalian->tanggal_kembali = $request-> tanggal_kembali;
        $pengembalian->kerusakan = $request-> kerusakan;

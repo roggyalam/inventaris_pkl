@@ -38,14 +38,13 @@ class RuanganController extends Controller
     {
         $validated = $request->validate([
             'nama_ruangan' => 'required',
-
         ]);
 
-       $ruangan = new    ruangan();
-       $ruangan->nama_ruangan = $request-> nama_ruangan;
-       $ruangan->save();
+        $ruangan = new ruangan();
+        $ruangan->nama_ruangan = $request->nama_ruangan;
+        $ruangan->save();
 
-    return redirect()->route('ruangan.index');
+        return redirect()->route('ruangan.index');
     }
 
     /**
@@ -67,7 +66,7 @@ class RuanganController extends Controller
      */
     public function edit(ruangan $ruangan)
     {
-        //
+        return view('ruangan.edit', compact('ruangan'));
     }
 
     /**
@@ -79,7 +78,14 @@ class RuanganController extends Controller
      */
     public function update(Request $request, ruangan $ruangan)
     {
-        //
+        $validated = $request->validate([
+            'nama_ruangan' => 'required',
+        ]);
+
+        $ruangan->nama_ruangan = $request->nama_ruangan;
+        $ruangan->save();
+
+        return redirect()->route('ruangan.index');
     }
 
     /**
@@ -90,6 +96,8 @@ class RuanganController extends Controller
      */
     public function destroy(ruangan $ruangan)
     {
-        //
+        $ruangan->delete();
+
+        return redirect()->route('ruangan.index');
     }
 }

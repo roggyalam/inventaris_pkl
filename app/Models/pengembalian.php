@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class pengembalian extends Model
 {
     use HasFactory;
-    protected $fillable = ['id','id_peminjaman','kondisi_barang','tanggal_kembali','kerusakan'];
+    protected $fillable = ['id','id_peminjaman','id_barang','kondisi_barang','tanggal_kembali','kerusakan'];
     public $timestamps = true;
 
     protected $casts = [
@@ -31,6 +31,11 @@ class pengembalian extends Model
 
     public function pinjaman()
     {
-        return $this->belongsTo(pinjaman::class,'id_pinjaman');
+        return $this->belongsTo(pinjaman::class,'id_peminjaman');
+    }
+
+    public function barang()
+    {
+        return $this->belongsTo(barang::class,'id_barang');
     }
 }

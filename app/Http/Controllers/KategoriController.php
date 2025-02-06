@@ -41,11 +41,11 @@ class KategoriController extends Controller
 
         ]);
 
-       $kategori = new    kategori();
-       $kategori->kategori = $request-> kategori;
-       $kategori->save();
+        $kategori = new kategori();
+        $kategori->kategori = $request->kategori;
+        $kategori->save();
 
-    return redirect()->route('kategori.index');
+        return redirect()->route('kategori.index');
     }
 
     /**
@@ -67,7 +67,7 @@ class KategoriController extends Controller
      */
     public function edit(kategori $kategori)
     {
-        //
+        return view('kategori.edit', compact('kategori'));
     }
 
     /**
@@ -79,7 +79,14 @@ class KategoriController extends Controller
      */
     public function update(Request $request, kategori $kategori)
     {
-        //
+        $validated = $request->validate([
+            'kategori' => 'required',
+        ]);
+
+        $kategori->kategori = $request->kategori;
+        $kategori->save();
+
+        return redirect()->route('kategori.index');
     }
 
     /**
@@ -90,6 +97,8 @@ class KategoriController extends Controller
      */
     public function destroy(kategori $kategori)
     {
-        //
+        $kategori->delete();
+
+        return redirect()->route('kategori.index');
     }
 }

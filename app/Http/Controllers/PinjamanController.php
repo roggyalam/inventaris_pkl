@@ -39,23 +39,28 @@ class PinjamanController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'id_barang' => 'required',
-            'tanggal_pinjam' => 'required',
-            'tanggal_kembali' => 'required',
-            'peminjam' => 'required',
-
+        // Validasi input
+        $request->validate([
+            'id_barang' => 'required|array',  // pastikan id_barang adalah array
+            'tanggal_pinjam' => 'required|date',
+            'tanggal_kembali' => 'required|date',
+            'peminjam' => 'required|string',
         ]);
 
-       $pinjaman = new    pinjaman();
-       $pinjaman->id_barang = $request-> id_barang;
-       $pinjaman->tanggal_pinjam = $request-> tanggal_pinjam;
-       $pinjaman->tanggal_kembali = $request-> tanggal_kembali;
-       $pinjaman->peminjam = $request-> peminjam;
-       $pinjaman->save();
+        // Loop melalui barang yang dipilih
+        foreach ($request->id_barang as $barangId) {
+            // Simpan data pinjaman
+            Pinjaman::create([
+                'id_barang' => $barangId,
+                'tanggal_pinjam' => $request->tanggal_pinjam,
+                'tanggal_kembali' => $request->tanggal_kembali,
+                'peminjam' => $request->peminjam,
+            ]);
+        }
 
-    return redirect()->route('pinjaman.index');
+        return redirect()->route('pinjaman.index')->with('success', 'Data pinjaman berhasil ditambahkan.');
     }
+
 
     /**
      * Display the specified resource.

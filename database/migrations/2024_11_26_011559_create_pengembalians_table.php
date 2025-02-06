@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->BigInteger('id_peminjaman')->unsigned();
             $table->foreign('id_peminjaman')->references('id')->on('pinjamen')->ondelete('cascade');
+            $table->BigInteger('id_barang')->unsigned();
+            $table->foreign('id_barang')->references('id')->on('barangs')->ondelete('cascade');
             $table->enum('kondisi_barang', ['Baik', 'Rusak', 'Rusak ringan'])->default('Baik');
             $table->string('tanggal_kembali');
             $table->string('kerusakan');

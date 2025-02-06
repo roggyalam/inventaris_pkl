@@ -5,23 +5,27 @@
     <div class="container-fluid pt-4 px-4">
         <div class="row">
             <div class="col-lg-12 mt-5">
-                <div class="panel panel-default">
-                    <h4 class="text-center text-secondary panel-heading">
+                <div class="card shadow-sm">
+                    <h4 class="text-center text-secondary card-header">
                         Tabel Data Barang
                     </h4>
-                    <!-- /.panel-heading -->
-                    <div class="panel-body">
-                        <div class="table-responsive">
-                            <!-- Tombol untuk menampilkan modal -->
-                            <a href="{{ route('barang.create') }}" class="btn btn-primary mb-2">Tambah</a>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <!-- Button to add new Barang -->
+                            <a href="{{ route('barang.create') }}" class="btn btn-primary">
+                                <i class="bi bi-plus-circle"></i> Tambah Barang
+                            </a>
 
                             @if (session('success'))
-                                <div class="alert alert-success" role="alert">
-                                    {{ session('success') }}
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>Berhasil!</strong> {{ session('success') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                             @endif
+                        </div>
 
-                            <table class="table table-bordered" id="dataTables-example">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -45,12 +49,18 @@
                                             <td>{{ $data->kondisi }}</td>
                                             <td><center>{{ $data->ruangan->nama_ruangan }}</center></td>
                                             <td>{{ $data->alamat }}</td>
-                                            <td class="center">
-                                                <a href="{{ route('barang.edit', $data->id) }}" class="btn btn-success mx-1">Ubah</a>
-                                                <form action="{{ route('barang.destroy', $data->id) }}" method="POST" style="display:inline;">
+                                            <td class="text-center">
+                                                <!-- Edit Button -->
+                                                <a href="{{ route('barang.edit', $data->id) }}" class="btn btn-success mx-1">
+                                                    <i class="bi bi-pencil-square"></i> Ubah
+                                                </a>
+                                                <!-- Delete Button -->
+                                                <form action="{{ route('barang.destroy', $data->id) }}" method="DELETE" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Yakin Ingin Menghapus??')">Hapus</button>
+                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Yakin Ingin Menghapus??')">
+                                                        <i class="bi bi-trash"></i> Hapus
+                                                    </button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -58,13 +68,9 @@
                                 </tbody>
                             </table>
                         </div>
-                        <!-- /.table-responsive -->
                     </div>
-                    <!-- /.panel-body -->
                 </div>
-                <!-- /.panel -->
             </div>
-            <!-- /.col-lg-12 -->
         </div>
     </div>
 </div>

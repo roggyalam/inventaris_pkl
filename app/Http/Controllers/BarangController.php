@@ -29,7 +29,7 @@ class BarangController extends Controller
     {
         $kategori = kategori::all();
         $ruangan = ruangan::all();
-        return view('barang.create', compact('kategori','ruangan'));
+        return view('barang.create', compact('kategori', 'ruangan'));
     }
 
     /**
@@ -48,15 +48,15 @@ class BarangController extends Controller
             'alamat' => 'required',
         ]);
 
-       $barang = new    barang();
-       $barang->nama_barang = $request-> nama_barang;
-       $barang->id_kategori = $request-> id_kategori;
-       $barang->kondisi = $request-> kondisi;
-       $barang->id_ruangan = $request-> id_ruangan;
-       $barang->alamat = $request-> alamat;
-       $barang->save();
+        $barang = new barang();
+        $barang->nama_barang = $request->nama_barang;
+        $barang->id_kategori = $request->id_kategori;
+        $barang->kondisi = $request->kondisi;
+        $barang->id_ruangan = $request->id_ruangan;
+        $barang->alamat = $request->alamat;
+        $barang->save();
 
-    return redirect()->route('barang.index');
+        return redirect()->route('barang.index');
     }
 
     /**
@@ -78,7 +78,9 @@ class BarangController extends Controller
      */
     public function edit(barang $barang)
     {
-        //
+        $kategori = kategori::all();
+        $ruangan = ruangan::all();
+        return view('barang.edit', compact('barang', 'kategori', 'ruangan'));
     }
 
     /**
@@ -90,7 +92,22 @@ class BarangController extends Controller
      */
     public function update(Request $request, barang $barang)
     {
-        //
+        $validated = $request->validate([
+            'nama_barang' => 'required',
+            'id_kategori' => 'required',
+            'kondisi' => 'required|in:baik,rusak,perbaikan',
+            'id_ruangan' => 'required',
+            'alamat' => 'required',
+        ]);
+
+        $barang->nama_barang = $request->nama_barang;
+        $barang->id_kategori = $request->id_kategori;
+        $barang->kondisi = $request->kondisi;
+        $barang->id_ruangan = $request->id_ruangan;
+        $barang->alamat = $request->alamat;
+        $barang->save();
+
+        return redirect()->route('barang.index');
     }
 
     /**
@@ -101,6 +118,7 @@ class BarangController extends Controller
      */
     public function destroy(barang $barang)
     {
-        //
+        $barang->delete();
+        return redirect()->route('barang.index');
     }
 }

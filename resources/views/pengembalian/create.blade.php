@@ -15,9 +15,17 @@
                                     @csrf
                                     <div class="mb-3">
                                         <label for="">Nama Peminjam</label>
-                                        <select name="id_peminjaman" id="" class="form-control">
+                                        <select name="id_pemidnjaman" id="" class="form-control">
                                             @foreach ($pinjaman as $item)
                                                 <option value="{{$item->id}}">{{ $item->peminjam}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="">Barang</label>
+                                        <select name="id_barang" id="" class="form-control">
+                                            @foreach ($barang as $item)
+                                                <option value="{{$item->id}}">{{ $item->nama_barang}}</option>
                                             @endforeach
                                         </select>
                                     </div>

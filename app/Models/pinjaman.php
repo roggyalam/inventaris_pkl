@@ -18,6 +18,6 @@ class pinjaman extends Model
 
     public function pengembalian()
     {
-        return $this->hasMany(pengembalian::class, 'id_pinjaman');
+        return $this->hasMany(pengembalian::class, 'id_peminjaman');
     }
 }

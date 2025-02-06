@@ -18,53 +18,53 @@
             padding: 0;
         }
 
-        /* Updated Jumbotron Color (Yellow) and Removed Text Shadow */
+        /* Jumbotron dengan Latar Belakang Biru */
         .jumbotron {
-            background-color: #ffeb3b; /* Yellow background */
+            background-color: #007bff; /* Biru background */
             padding: 3rem 2rem;
             border-radius: 15px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
-            color: #333; /* Dark text for contrast */
-            text-shadow: none; /* Removed text shadow */
+            color: white;
+            text-shadow: none;
         }
 
         .jumbotron h1, .jumbotron h2, .jumbotron p {
-            color: #333; /* Ensure text contrast with yellow background */
+            color: white;
         }
 
         .jumbotron hr {
-            border-top: 1px solid #333;
+            border-top: 1px solid #fff;
         }
 
-        /* Primary Yellow Button */
+        /* Tombol Biru */
         .btn-primary {
-            background-color: #ffcc00;
+            background-color: #0056b3; /* Biru gelap */
             border: none;
-            box-shadow: 0 4px 8px rgba(255, 204, 0, 0.4);
+            box-shadow: 0 4px 8px rgba(0, 86, 179, 0.4);
             transition: all 0.3s ease-in-out;
         }
 
         .btn-primary:hover {
-            background-color: #e6b800;
-            box-shadow: 0 6px 12px rgba(255, 204, 0, 0.6);
+            background-color: #004085; /* Biru lebih gelap */
+            box-shadow: 0 6px 12px rgba(0, 86, 179, 0.6);
             transform: translateY(-2px);
         }
 
-        /* Secondary Button */
+        /* Tombol Sekunder */
         .btn-secondary {
-            background-color: #f7c500;
+            background-color: #0056b3; /* Biru gelap */
             border: none;
-            box-shadow: 0 4px 8px rgba(247, 197, 0, 0.4);
+            box-shadow: 0 4px 8px rgba(0, 86, 179, 0.4);
             transition: all 0.3s ease-in-out;
         }
 
         .btn-secondary:hover {
-            background-color: #e6b800;
-            box-shadow: 0 6px 12px rgba(247, 197, 0, 0.6);
+            background-color: #004085; /* Biru lebih gelap */
+            box-shadow: 0 6px 12px rgba(0, 86, 179, 0.6);
             transform: translateY(-2px);
         }
 
-        /* Success Button */
+        /* Tombol Sukses */
         .btn-success {
             background-color: #28a745;
             border: none;
@@ -78,9 +78,10 @@
             transform: translateY(-2px);
         }
 
+        /* Navbar Biru */
         .navbar {
             padding: 1rem;
-            background-color: #f7c500; /* Yellow navbar */
+            background-color: #0056b3; /* Biru navbar */
         }
 
         .navbar-brand {
@@ -100,7 +101,7 @@
             background-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* Container with light gray background */
+        /* Container dengan latar belakang abu-abu muda */
         .container {
             max-width: 1200px;
             margin-top: 150px;
@@ -144,7 +145,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-        <a class="navbar-brand" href="#">Laravel CASHIER</a>
+        <a class="navbar-brand" href="#">Laravel INVENTARIS</a>
         <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav">
                 @if (Route::has('login'))
@@ -171,11 +172,11 @@
         <div class="jumbotron text-center">
             <div class="mb-4">
                 <a href="{{ route('login') }}" class="auth-logo">
-                    <img src="{{ asset('backend/assets/images/uniba.png') }}" alt="logo-dark" class="mx-auto" height="100" />
+                    <img src="{{ asset('backend/assets/images/download.png') }}" alt="logo-dark" class="mx-auto" height="100" />
                 </a>
-                <h2>UNIVERSITAS BALE BANDUNG</h2>
+                <h2>WEB INVENTARIS LABKOM</h2>
             </div>
-            <h1 class="display-4"><i class="fas fa-laravel"></i> Welcome To Inventaris UNIBBA</h1>
+            <h1 class="display-4"><i class="fas fa-laravel"></i> Welcome To Inventaris LAB</h1>
             <p class="lead">This is the welcome page of your Inventaris application.</p>
             <hr class="my-4">
             <p>Get started by logging in or registering below:</p>
