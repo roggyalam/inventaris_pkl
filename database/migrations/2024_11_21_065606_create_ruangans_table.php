@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('ruangans', function (Blueprint $table) {
             $table->id();
             $table->string('nama_ruangan');
+            // tambah kode ruangan
+            $table->string('kode_ruangan')->unique();
             $table->timestamps();
         });
     }

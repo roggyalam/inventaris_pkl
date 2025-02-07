@@ -11,7 +11,6 @@
                     </h4>
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-4">
-                            <!-- Tombol untuk menampilkan modal -->
                             <a href="{{ route('pinjaman.create') }}" class="btn btn-primary">
                                 <i class="bi bi-plus-circle"></i> Tambah Pinjaman
                             </a>
@@ -29,10 +28,10 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Nama Barang</th>
+                                        <th>Nama Peminjam</th>
+                                        <th>Barang Dipinjam</th>
                                         <th>Tanggal Pinjam</th>
                                         <th>Tanggal Kembali</th>
-                                        <th>Nama Peminjam</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -43,10 +42,16 @@
                                     @foreach ($pinjaman as $data)
                                         <tr>
                                             <td>{{ $no++ }}</td>
-                                            <td class="text-center">{{ $data->barang->nama_barang }}</td>
+                                            <td>{{ $data->peminjam }}</td>
+                                            <td>
+                                                <ul>
+                                                    @foreach ($data->barang as $barang)
+                                                        <li>{{ $barang->nama_barang }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </td>
                                             <td>{{ $data->tanggal_pinjam }}</td>
                                             <td>{{ $data->tanggal_kembali }}</td>
-                                            <td>{{ $data->peminjam }}</td>
                                             <form action="{{ route('pinjaman.destroy', $data->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')

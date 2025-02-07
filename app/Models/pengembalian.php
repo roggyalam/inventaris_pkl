@@ -5,37 +5,36 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class pengembalian extends Model
+class Pengembalian extends Model
 {
     use HasFactory;
-    protected $fillable = ['id','id_peminjaman','id_barang','kondisi_barang','tanggal_kembali','kerusakan'];
+
+    protected $fillable = ['id_peminjaman', 'tanggal_kembali', 'catatan'];
+
     public $timestamps = true;
 
     protected $casts = [
-        'kondisi_barang' => 'string', // Pastikan kondisi disimpan sebagai string
+        'kondisi_barang' => 'string',
     ];
 
-    // Kamu juga bisa menambahkan helper function untuk kondisi
     const KONDISI_BAIK = 'baik';
     const KONDISI_RUSAK = 'rusak';
-    const KONDISI_RUSAK_RINGAN = 'rusak ringan';
+    const KONDISI_HILANG = 'hilang';
 
     public static function getKondisiOptions()
     {
         return [
             self::KONDISI_BAIK => 'Baik',
             self::KONDISI_RUSAK => 'Rusak',
-            self::KONDISI_RUSAK_RINGAN => 'Rusak Ringan',
+            self::KONDISI_HILANG => 'Hilang',
         ];
     }
 
-    public function pinjaman()
+    // Relasi Many-to-Many dengan Barang
+    public function barangs()
     {
-        return $this->belongsTo(pinjaman::class,'id_peminjaman');
-    }
-
-    public function barang()
-    {
-        return $this->belongsTo(barang::class,'id_barang');
+        return $this->belongsToMany(Barang::class, 'pengembalian_barang')
+                    ->withPivot('kondisi_barang')  // Menyertakan kolom tambahan 'kondisi_barang' di pivot table
+                    ->withTimestamps();
     }
 }

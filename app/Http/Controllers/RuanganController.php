@@ -38,10 +38,12 @@ class RuanganController extends Controller
     {
         $validated = $request->validate([
             'nama_ruangan' => 'required',
+            'kode_ruangan' => 'required',
         ]);
 
         $ruangan = new ruangan();
         $ruangan->nama_ruangan = $request->nama_ruangan;
+        $ruangan->kode_ruangan = $request->kode_ruangan;
         $ruangan->save();
 
         return redirect()->route('ruangan.index');
@@ -80,8 +82,10 @@ class RuanganController extends Controller
     {
         $validated = $request->validate([
             'nama_ruangan' => 'required',
+            'kode_ruangan' => 'required',
         ]);
 
+        $ruangan->nama_ruangan = $request->nama_ruangan;
         $ruangan->nama_ruangan = $request->nama_ruangan;
         $ruangan->save();
 

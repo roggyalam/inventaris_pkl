@@ -5,19 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class pinjaman extends Model
+class Pinjaman extends Model
 {
     use HasFactory;
-    protected $fillable = ['id','id_barang','tanggal_pinjam','tanggal_kembali','peminjam'];
+
+    protected $fillable = ['kode_pinjaman', 'tanggal_pinjam', 'tanggal_kembali', 'peminjam'];
+
     public $timestamps = true;
 
-    public function barang()
+    // Relasi Many-to-Many dengan Barang
+    public function barangs()
     {
-        return $this->belongsTo(barang::class,'id_barang');
+        return $this->belongsToMany(Barang::class, 'pinjaman_barang')
+                    ->withPivot('jumlah')  // Menyertakan kolom tambahan 'jumlah' di pivot table
+                    ->withTimestamps();
     }
 
-    public function pengembalian()
+    // Mendapatkan total jumlah barang yang dipinjam
+    public function totalBarang()
     {
-        return $this->hasMany(pengembalian::class, 'id_peminjaman');
+        return $this->barangs()->sum('pinjaman_barang.jumlah');
     }
 }

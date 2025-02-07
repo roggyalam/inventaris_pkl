@@ -6,14 +6,14 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h4>Edit Ruangan</h4>
+                    <h4>Tambah Ruangan</h4>
                 </div>
 
                 <div class="card-body">
-                    <form action="{{ route('ruangan.update', $ruangan->id) }}" method="POST">
+                    <form action="{{ route('ruangan.store') }}" method="POST">
                         @csrf
-                        @method('PUT')
 
+                        <!-- Nama Ruangan -->
                         <div class="form-group">
                             <label for="nama_ruangan">Nama Ruangan</label>
                             <input
@@ -21,7 +21,7 @@
                                 name="nama_ruangan"
                                 id="nama_ruangan"
                                 class="form-control @error('nama_ruangan') is-invalid @enderror"
-                                value="{{ old('nama_ruangan', $ruangan->nama_ruangan) }}"
+                                value="{{ old('nama_ruangan') }}"
                                 required
                             >
 
@@ -32,8 +32,27 @@
                             @enderror
                         </div>
 
+                        <!-- Kode Ruangan -->
                         <div class="form-group mt-3">
-                            <button type="submit" class="btn btn-primary">Update Ruangan</button>
+                            <label for="kode_ruangan">Kode Ruangan</label>
+                            <input
+                                type="text"
+                                name="kode_ruangan"
+                                id="kode_ruangan"
+                                class="form-control @error('kode_ruangan') is-invalid @enderror"
+                                value="{{ old('kode_ruangan') }}"
+                                required
+                            >
+
+                            @error('kode_ruangan')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group mt-4">
+                            <button type="submit" class="btn btn-primary">Tambah Ruangan</button>
                             <a href="{{ route('ruangan.index') }}" class="btn btn-secondary">Kembali</a>
                         </div>
                     </form>

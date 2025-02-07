@@ -5,50 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class barang extends Model
+class Barang extends Model
 {
     use HasFactory;
-    protected $fillable = ['id','nama_barang','id_kategori','kondisi','id_ruangan','alamat'];
+
+    protected $fillable = ['nama_barang', 'id_kategori', 'kondisi', 'id_ruangan', 'alamat', 'kode_barang', 'kode_ruangan'];
+
     public $timestamps = true;
 
-      // Menambahkan cast agar kondisi otomatis diperlakukan sebagai nilai enum
-      protected $casts = [
-        'kondisi' => 'string', // Pastikan kondisi disimpan sebagai string
-    ];
-
-    // Kamu juga bisa menambahkan helper function untuk kondisi
-    const KONDISI_BAIK = 'baik';
-    const KONDISI_RUSAK = 'rusak';
-    const KONDISI_PERBAIKAN = 'perbaikan';
-
-    public static function getKondisiOptions()
-    {
-        return [
-            self::KONDISI_BAIK => 'Baik',
-            self::KONDISI_RUSAK => 'Rusak',
-            self::KONDISI_PERBAIKAN => 'Perbaikan',
-        ];
-    }
-
-
-    public function kategori()
-    {
-        return $this->belongsTo(Kategori::class,'id_kategori');
-    }
-    public function ruangan()
-    {
-        return $this->belongsTo(ruangan::class,'id_ruangan');
-    }
-    public function pengadaan_barang()
-    {
-        return $this->hasMany(pengadaan_barang::class, 'id_barang');
-    }
+    // Relasi Many-to-Many dengan Pinjaman
     public function pinjaman()
     {
-        return $this->hasMany(pinjaman::class, 'id_barang');
+        return $this->belongsToMany(Pinjaman::class, 'pinjaman_barang')
+                    ->withPivot('jumlah')
+                    ->withTimestamps();
     }
-    public function perbaikan_barang()
+
+    // Relasi Many-to-Many dengan Pengembalian
+    public function pengembalian()
     {
-        return $this->hasMany(perbaikan_barang::class, 'id_barang');
+        return $this->belongsToMany(Pengembalian::class, 'pengembalian_barang')
+                    ->withPivot('kondisi_barang')
+                    ->withTimestamps();
     }
 }

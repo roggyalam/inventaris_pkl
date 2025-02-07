@@ -21,7 +21,9 @@ return new class extends Migration
             $table->enum('kondisi', ['Baik', 'Rusak', 'Perbaikan'])->default('Baik');
             $table->BigInteger('id_ruangan')->unsigned();
             $table->foreign('id_ruangan')->references('id')->on('ruangans')->ondelete('cascade');
-            $table->string('alamat');
+            // $table->string('alamat');
+            $table->string('kode_barang')->unique();
+            $table->integer('jumlah');
             $table->timestamps();
         });
     }
