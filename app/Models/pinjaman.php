@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,9 +15,9 @@ class Pinjaman extends Model
     // Relasi Many-to-Many dengan Barang
     public function barangs()
     {
-        return $this->belongsToMany(Barang::class, 'pinjaman_barang')
-                    ->withPivot('jumlah')  // Menyertakan kolom tambahan 'jumlah' di pivot table
-                    ->withTimestamps();
+        return $this->belongsToMany(Barang::class, 'pinjaman_barang', 'id_pinjaman', 'id_barang') // Menyebutkan nama pivot dan kolom terkait
+            ->withPivot('jumlah')                                                                     // Menyertakan kolom tambahan 'jumlah' di pivot table
+            ->withTimestamps();
     }
 
     // Mendapatkan total jumlah barang yang dipinjam

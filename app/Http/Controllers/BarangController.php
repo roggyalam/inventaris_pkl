@@ -2,123 +2,105 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\kategori;
-use App\Models\ruangan;
-use App\Models\barang;
+use App\Models\Kategori;
+use App\Models\Ruangan;
+use App\Models\Barang;
 use Illuminate\Http\Request;
 
 class BarangController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Menampilkan daftar barang.
      */
     public function index()
     {
-        $barang = barang::all();
+        $barang = Barang::all();
         return view('barang.index', compact('barang'));
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Menampilkan form tambah barang.
      */
     public function create()
     {
-        $kategori = kategori::all();
-        $ruangan = ruangan::all();
+        $kategori = Kategori::all();
+        $ruangan = Ruangan::all();
         return view('barang.create', compact('kategori', 'ruangan'));
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Menyimpan barang baru ke database.
      */
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama_barang' => 'required',
-            'id_kategori' => 'required',
-            'kondisi' => 'required|in:baik,rusak,perbaikan',
-            'id_ruangan' => 'required',
-            'alamat' => 'required',
+            'kode_barang' => 'required',
+            'nama_barang' => 'required|string|max:255',
+            'id_kategori' => 'required|exists:kategoris,id',
+            'kondisi' => 'required|in:Baik,Rusak,Perbaikan',
+            'id_ruangan' => 'required|exists:ruangans,id',
+            'jumlah' => 'required|integer|min:1',
         ]);
 
-        $barang = new barang();
-        $barang->nama_barang = $request->nama_barang;
-        $barang->id_kategori = $request->id_kategori;
-        $barang->kondisi = $request->kondisi;
-        $barang->id_ruangan = $request->id_ruangan;
-        $barang->alamat = $request->alamat;
-        $barang->save();
+        // Generate kode barang otomatis (format: BRG-YYYYMMDD-His)
+        $kode_barang = 'BRG-' . date('Ymd-His');
 
-        return redirect()->route('barang.index');
+        Barang::create([
+            'kode_barang' => $kode_barang,
+            'nama_barang' => $validated['nama_barang'],
+            'id_kategori' => $validated['id_kategori'],
+            'kondisi' => $validated['kondisi'],
+            'id_ruangan' => $validated['id_ruangan'],
+            'jumlah' => $validated['jumlah'],
+
+        ]);
+
+        return redirect()->route('barang.index')->with('success', 'Barang berhasil ditambahkan!');
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\barang  $barang
-     * @return \Illuminate\Http\Response
+     * Menampilkan detail barang tertentu.
      */
-    public function show(barang $barang)
+    public function show(Barang $barang)
     {
-        //
+        return view('barang.show', compact('barang'));
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\barang  $barang
-     * @return \Illuminate\Http\Response
+     * Menampilkan form edit barang.
      */
-    public function edit(barang $barang)
+    public function edit(Barang $barang)
     {
-        $kategori = kategori::all();
-        $ruangan = ruangan::all();
+        $kategori = Kategori::all();
+        $ruangan = Ruangan::all();
         return view('barang.edit', compact('barang', 'kategori', 'ruangan'));
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\barang  $barang
-     * @return \Illuminate\Http\Response
+     * Memperbarui data barang.
      */
-    public function update(Request $request, barang $barang)
+    public function update(Request $request, Barang $barang)
     {
         $validated = $request->validate([
-            'nama_barang' => 'required',
-            'id_kategori' => 'required',
-            'kondisi' => 'required|in:baik,rusak,perbaikan',
-            'id_ruangan' => 'required',
-            'alamat' => 'required',
+            'kode_barang' => 'required',
+            'nama_barang' => 'required|string|max:255',
+            'id_kategori' => 'required|exists:kategoris,id',
+            'kondisi' => 'required|in:Baik,Rusak,Perbaikan',
+            'id_ruangan' => 'required|exists:ruangans,id',
+            'jumlah' => 'required|integer|min:0',
         ]);
 
-        $barang->nama_barang = $request->nama_barang;
-        $barang->id_kategori = $request->id_kategori;
-        $barang->kondisi = $request->kondisi;
-        $barang->id_ruangan = $request->id_ruangan;
-        $barang->alamat = $request->alamat;
-        $barang->save();
+        $barang->update($validated);
 
-        return redirect()->route('barang.index');
+        return redirect()->route('barang.index')->with('success', 'Barang berhasil diperbarui!');
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\barang  $barang
-     * @return \Illuminate\Http\Response
+     * Menghapus barang dari database.
      */
-    public function destroy(barang $barang)
+    public function destroy(Barang $barang)
     {
         $barang->delete();
-        return redirect()->route('barang.index');
+        return redirect()->route('barang.index')->with('success', 'Barang berhasil dihapus!');
     }
 }

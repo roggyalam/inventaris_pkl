@@ -39,17 +39,24 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Barang</th>
+                                                        <th>Jumlah</th>
                                                         <th width="10%">Aksi</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
+                                                    <tr class="barang-row">
                                                         <td>
                                                             <select name="id_barang[]" class="form-control barang-select" required>
+                                                                <option value="">Pilih Barang</option>
                                                                 @foreach ($barang as $item)
-                                                                    <option value="{{ $item->id }}">{{ $item->nama_barang }}</option>
+                                                                    <option value="{{ $item->id }}" data-stock="{{ $item->jumlah }}">
+                                                                        {{ $item->nama_barang }} (Stok: {{ $item->jumlah }})
+                                                                    </option>
                                                                 @endforeach
                                                             </select>
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" name="jumlah[]" class="form-control jumlah-barang" min="1" required>
                                                         </td>
                                                         <td class="text-center">
                                                             <button type="button" class="btn btn-info btn-sm add-barang-btn">+</button>
@@ -76,29 +83,52 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        document.querySelector(".add-barang-btn").addEventListener("click", function () {
-            let table = document.querySelector("#barang-table tbody");
-            let row = document.createElement("tr");
-            row.innerHTML = `
-                <td>
-                    <select name="id_barang[]" class="form-control barang-select" required>
-                        @foreach ($barang as $item)
-                            <option value="{{ $item->id }}">{{ $item->nama_barang }}</option>
-                        @endforeach
-                    </select>
-                </td>
-                <td class="text-center">
-                    <button type="button" class="btn btn-danger btn-sm remove-barang-btn">−</button>
-                </td>
-            `;
-            table.appendChild(row);
+        let barangData = @json($barang); // Mengambil data barang dari PHP ke JavaScript
+        let barangTable = document.querySelector("#barang-table tbody");
 
-            row.querySelector(".remove-barang-btn").addEventListener("click", function () {
-                row.remove();
+        document.addEventListener("click", function (event) {
+            if (event.target.classList.contains("add-barang-btn")) {
+                let newRow = document.createElement("tr");
+                newRow.classList.add("barang-row");
+
+                newRow.innerHTML = `
+                    <td>
+                        <select name="id_barang[]" class="form-control barang-select" required>
+                            <option value="">Pilih Barang</option>
+                            ${barangData.map(item => `<option value="${item.id}" data-stock="${item.jumlah}">${item.nama_barang} (Stok: ${item.jumlah})</option>`).join('')}
+                        </select>
+                    </td>
+                    <td>
+                        <input type="number" name="jumlah[]" class="form-control jumlah-barang" min="1" required>
+                    </td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-danger btn-sm remove-barang-btn">−</button>
+                    </td>
+                `;
+
+                barangTable.appendChild(newRow);
                 updateBarangOptions();
-            });
+            }
 
-            updateBarangOptions();
+            if (event.target.classList.contains("remove-barang-btn")) {
+                event.target.closest(".barang-row").remove();
+                updateBarangOptions();
+            }
+        });
+
+        document.addEventListener("change", function (event) {
+            if (event.target.classList.contains("barang-select")) {
+                updateBarangOptions();
+            }
+
+            if (event.target.classList.contains("jumlah-barang")) {
+                let selectedOption = event.target.closest("tr").querySelector(".barang-select option:checked");
+                let maxStock = selectedOption.dataset.stock || 1;
+                event.target.max = maxStock;
+                if (parseInt(event.target.value) > parseInt(maxStock)) {
+                    event.target.value = maxStock;
+                }
+            }
         });
 
         function updateBarangOptions() {
@@ -116,12 +146,6 @@
                 });
             });
         }
-
-        document.addEventListener("change", function (event) {
-            if (event.target.classList.contains("barang-select")) {
-                updateBarangOptions();
-            }
-        });
     });
 </script>
 @endsection
