@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js"></script>
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -17,165 +20,20 @@
             margin: 0;
             padding: 0;
         }
-
-        /* Jumbotron dengan Latar Belakang Biru */
-        .jumbotron {
-            background-color: #007bff; /* Biru background */
-            padding: 3rem 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
-            color: white;
-            text-shadow: none;
-        }
-
-        .jumbotron h1, .jumbotron h2, .jumbotron p {
-            color: white;
-        }
-
-        .jumbotron hr {
-            border-top: 1px solid #fff;
-        }
-
-        /* Tombol Biru */
-        .btn-primary {
-            background-color: #0056b3; /* Biru gelap */
-            border: none;
-            box-shadow: 0 4px 8px rgba(0, 86, 179, 0.4);
-            transition: all 0.3s ease-in-out;
-        }
-
-        .btn-primary:hover {
-            background-color: #004085; /* Biru lebih gelap */
-            box-shadow: 0 6px 12px rgba(0, 86, 179, 0.6);
-            transform: translateY(-2px);
-        }
-
-        /* Tombol Sekunder */
-        .btn-secondary {
-            background-color: #0056b3; /* Biru gelap */
-            border: none;
-            box-shadow: 0 4px 8px rgba(0, 86, 179, 0.4);
-            transition: all 0.3s ease-in-out;
-        }
-
-        .btn-secondary:hover {
-            background-color: #004085; /* Biru lebih gelap */
-            box-shadow: 0 6px 12px rgba(0, 86, 179, 0.6);
-            transform: translateY(-2px);
-        }
-
-        /* Tombol Sukses */
-        .btn-success {
-            background-color: #28a745;
-            border: none;
-            box-shadow: 0 4px 8px rgba(40, 167, 69, 0.4);
-            transition: all 0.3s ease-in-out;
-        }
-
-        .btn-success:hover {
-            background-color: #218838;
-            box-shadow: 0 6px 12px rgba(40, 167, 69, 0.6);
-            transform: translateY(-2px);
-        }
-
-        /* Navbar Biru */
-        .navbar {
-            padding: 1rem;
-            background-color: #0056b3; /* Biru navbar */
-        }
-
-        .navbar-brand {
-            font-weight: bold;
-            font-size: 1.5rem;
-            color: #fff;
-        }
-
-        .nav-link {
-            color: white !important;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        /* Container dengan latar belakang abu-abu muda */
         .container {
-            max-width: 1200px;
             margin-top: 150px;
-            background-color: #f1f1f1; /* Light gray (abu-abu) */
+            background-color: #f1f1f1;
             padding: 3rem;
             border-radius: 15px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .auth-logo img {
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-        }
-
-        .lead {
-            font-size: 1.2rem;
-        }
-
-        .jumbotron h1 {
-            font-size: 3rem;
-            font-weight: 700;
-        }
-
-        .jumbotron h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-        }
-
-        @media (max-width: 768px) {
-            .jumbotron {
-                padding: 2rem 1rem;
-            }
-            .jumbotron h1 {
-                font-size: 2.5rem;
-            }
-            .jumbotron h2 {
-                font-size: 2rem;
-            }
+            color: black;
         }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-        <a class="navbar-brand" href="#">Laravel INVENTARIS</a>
-        <div class="collapse navbar-collapse justify-content-end">
-            <ul class="navbar-nav">
-                @if (Route::has('login'))
-                    @auth
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/home') }}">Dashboard</a>
-                        </li>
-                    @else
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-primary" href="{{ route('login') }}">Log in</a>
-                        </li>
-                        @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link btn btn-secondary" href="{{ route('register') }}">Register</a>
-                            </li>
-                        @endif
-                    @endauth
-                @endif
-            </ul>
-        </div>
-    </nav>
-
     <div class="container">
         <div class="jumbotron text-center">
-            <div class="mb-4">
-                <a href="{{ route('login') }}" class="auth-logo">
-                    <img src="{{ asset('backend/assets/images/download.png') }}" alt="logo-dark" class="mx-auto" height="100" />
-                </a>
-                <h2>WEB INVENTARIS LABKOM</h2>
-            </div>
+            <h2>WEB INVENTARIS LABKOM</h2>
             <h1 class="display-4"><i class="fas fa-laravel"></i> Welcome To Inventaris LAB</h1>
             <p class="lead">This is the welcome page of your Inventaris application.</p>
             <hr class="my-4">
@@ -186,7 +44,67 @@
             @endif
             <p class="mt-4">Jika Anda Tidak Memiliki Akun Hanya Bisa Melihat Data Inventaris Saja</p>
             <a href="{{ route('home') }}" class="btn btn-success mx-1">Data Inventaris</a>
+            <button class="btn btn-info mx-1" data-toggle="modal" data-target="#qrModal">QR Code</button>
         </div>
     </div>
+
+    <!-- Modal QR Code -->
+    <div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="qrModalLabel">QR Code</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <div id="qrcode"></div>
+                    <hr>
+                    <p>Scan QR Code atau gunakan kamera untuk membaca QR</p>
+                    <video id="qr-video" width="100%" style="display:none;"></video>
+                    <button id="scan-qr" class="btn btn-success mt-2">Scan QR Code</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            let qr = new QRCode(document.getElementById("qrcode"), {
+                text: "{{ url('/home') }}",
+                width: 200,
+                height: 200
+            });
+
+            $('#scan-qr').click(function() {
+                let video = document.getElementById("qr-video");
+                video.style.display = "block";
+                navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
+                    video.srcObject = stream;
+                    video.play();
+                    let canvas = document.createElement("canvas");
+                    let ctx = canvas.getContext("2d");
+                    setInterval(function() {
+                        if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                            canvas.width = video.videoWidth;
+                            canvas.height = video.videoHeight;
+                            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                            let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                            let code = jsQR(imageData.data, canvas.width, canvas.height);
+                            if (code) {
+                                alert("QR Code ditemukan: " + code.data);
+                                stream.getTracks().forEach(track => track.stop());
+                                video.style.display = "none";
+                            }
+                        }
+                    }, 500);
+                }).catch(err => console.error(err));
+            });
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

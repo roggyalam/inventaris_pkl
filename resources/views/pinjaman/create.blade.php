@@ -14,6 +14,12 @@
                             @csrf
                             <table class="table table-bordered">
                                 <tbody>
+                                     <tr>
+                                        <th width="30%">Kode Pinjaman</th>
+                                        <td>
+                                            <input type="text" class="form-control" id="kode_pinjaman" name="kode_pinjaman" required>
+                                        </td>
+                                    </tr>
                                     <tr>
                                         <th width="30%">Nama Peminjam</th>
                                         <td>

@@ -14,10 +14,10 @@
                                 <form action="{{ route('pengembalian.store') }}" method="POST" role="form" enctype="multipart/form-data">
                                     @csrf
                                     <div class="mb-3">
-                                        <label for="">Nama Peminjam</label>
-                                        <select name="id_pemidnjaman" id="" class="form-control">
+                                        <label for="">Kode Peminjam</label>
+                                        <select name="id_peminjaman" id="" class="form-control">
                                             @foreach ($pinjaman as $item)
-                                                <option value="{{$item->id}}">{{ $item->peminjam}}</option>
+                                                <option value="{{$item->id}}">{{ $item->kode_pinjaman}}</option>
                                             @endforeach
                                         </select>
                                     </div>

@@ -25,6 +25,7 @@
                             <thead class="table-dark text-center">
                                 <tr>
                                     <th>No</th>
+                                    <th>Kode Pinjaman</th>
                                     <th>Peminjam</th>
                                     <th>Barang Yang Dipinjam</th>
                                     <th>Tanggal Pinjam</th>
@@ -36,6 +37,7 @@
                                 @forelse ($pinjaman as $data)
                                     <tr class="text-center">
                                         <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $data->kode_pinjaman }}</td>
                                         <td>{{ $data->peminjam }}</td>
                                         <td>
                                             <ul class="list-unstyled text-start">

@@ -25,7 +25,7 @@
                             <thead class="table-dark text-center">
                                 <tr>
                                     <th>No</th>
-                                    <th>Peminjam</th>
+                                    <th>Kode Peminjam</th>
                                     <th>Barang Yang Dipinjam</th>
                                     <th>Kondisi</th>
                                     <th>Tanggal Kembali</th>
@@ -37,7 +37,7 @@
                                 @forelse ($pengembalian as $data)
                                     <tr class="text-center">
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $data->pinjaman->peminjam }}</td>
+                                        <td>{{ $data->pinjaman->kode_pinjaman }}</td>
                                         <td>
                                             <ul class="list-unstyled text-start">
                                                 @foreach ($data->barang as $barang)

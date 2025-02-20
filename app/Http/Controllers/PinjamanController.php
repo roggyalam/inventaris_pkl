@@ -25,6 +25,7 @@ class PinjamanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'kode_pinjaman'       => 'required|array',
             'id_barang'       => 'required|array',
             'id_barang.*'     => 'exists:barangs,id',
             'jumlah'          => 'required|array',
